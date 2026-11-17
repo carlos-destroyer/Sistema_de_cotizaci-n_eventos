@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { useEffect, useState, type ReactNode } from "react";
 import {
   Boxes,
@@ -13,10 +13,12 @@ import {
   Plus,
   Settings,
   Sparkles,
+  UserCog,
   Users,
   X,
 } from "lucide-react";
 import { NAV_ITEMS } from "@/lib/constants";
+import { useAuth } from "./auth-provider";
 import { formatLongDate, todayISO } from "@/lib/format";
 import { ToastProvider } from "./toast";
 
@@ -27,6 +29,7 @@ const icons = {
   catalogo: Boxes,
   plantillas: LayoutTemplate,
   configuracion: Settings,
+  usuarios: UserCog,
 } as const;
 
 function isActive(pathname: string, href: string) {
@@ -34,7 +37,17 @@ function isActive(pathname: string, href: string) {
   return pathname === href || pathname.startsWith(`${href}/`);
 }
 
-function SidebarContent({ pathname, onNavigate }: { pathname: string; onNavigate?: () => void }) {
+function SidebarContent({
+  pathname,
+  onNavigate,
+  user,
+  onLogout,
+}: {
+  pathname: string;
+  onNavigate?: () => void;
+  user: { nombre: string; rol: string } | null;
+  onLogout: () => void;
+}) {
   return (
     <div className="flex h-full flex-col">
       <div className="flex items-center gap-3 px-5 pb-6 pt-6">
@@ -100,17 +113,20 @@ function SidebarContent({ pathname, onNavigate }: { pathname: string; onNavigate
         <div className="rounded-2xl border border-white/10 bg-white/[0.04] p-4">
           <div className="flex items-center gap-3">
             <div className="flex h-9 w-9 items-center justify-center rounded-full bg-brand-400/15 text-xs font-semibold text-brand-200">
-              MM
+              {(user?.nombre ?? "MM").slice(0, 2).toUpperCase()}
             </div>
             <div className="min-w-0">
-              <p className="truncate text-xs font-semibold text-slate-200">Mariella Martínez</p>
-              <p className="text-[10px] text-slate-500">Administradora</p>
+              <p className="truncate text-xs font-semibold text-slate-200">{user?.nombre ?? "Invitado"}</p>
+              <p className="text-[10px] text-slate-500">{user?.rol === "ADMIN" ? "Administrador" : "Usuario"}</p>
             </div>
           </div>
-          <div className="mt-3 flex items-center gap-1.5 border-t border-white/10 pt-3 text-[10px] text-slate-500">
-            <span className="h-1.5 w-1.5 rounded-full bg-emerald-400" />
-            Sistema en línea · v1.0
-          </div>
+          <button
+            type="button"
+            onClick={onLogout}
+            className="mt-3 flex w-full items-center justify-center gap-1.5 rounded-lg border border-white/10 px-3 py-1.5 text-[11px] font-medium text-slate-300 transition hover:bg-white/5 hover:text-white"
+          >
+            Cerrar sesión
+          </button>
         </div>
       </div>
     </div>
@@ -131,6 +147,8 @@ function sectionLabel(pathname: string) {
 
 export function AppShell({ children }: { children: ReactNode }) {
   const pathname = usePathname();
+  const router = useRouter();
+  const { user, logout, loading } = useAuth();
   const [mobileOpen, setMobileOpen] = useState(false);
   const [today, setToday] = useState("");
 
@@ -142,11 +160,23 @@ export function AppShell({ children }: { children: ReactNode }) {
     setMobileOpen(false);
   }, [pathname]);
 
+  if (pathname === "/login") {
+    return <>{children}</>;
+  }
+
+  if (loading) {
+    return (
+      <div className="flex min-h-screen items-center justify-center bg-paper">
+        <div className="text-sm text-slate-500">Cargando sesión…</div>
+      </div>
+    );
+  }
+
   return (
     <ToastProvider>
       <div className="min-h-screen lg:pl-[272px]">
         <aside className="fixed inset-y-0 left-0 z-40 hidden w-[272px] border-r border-white/5 bg-ink lg:block">
-          <SidebarContent pathname={pathname} />
+          <SidebarContent pathname={pathname} user={user} onLogout={logout} />
         </aside>
 
         <div
@@ -170,7 +200,7 @@ export function AppShell({ children }: { children: ReactNode }) {
             >
               <X className="h-5 w-5" />
             </button>
-            <SidebarContent pathname={pathname} onNavigate={() => setMobileOpen(false)} />
+            <SidebarContent pathname={pathname} onNavigate={() => setMobileOpen(false)} user={user} onLogout={logout} />
           </aside>
         </div>
 

@@ -15,9 +15,26 @@ import type {
   PlantillaAplicada,
   PlantillaRequest,
   Categoria,
+  Usuario,
+  UsuarioRequest,
+  UsuarioUpdateRequest,
+  LoginResponse,
 } from "./types";
 
 const API_URL = (process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:8081/api").replace(/\/+$/, "");
+
+const TOKEN_KEY = "mm_token";
+
+export function getToken(): string | null {
+  if (typeof window === "undefined") return null;
+  return window.localStorage.getItem(TOKEN_KEY);
+}
+
+export function setToken(token: string | null) {
+  if (typeof window === "undefined") return;
+  if (token) window.localStorage.setItem(TOKEN_KEY, token);
+  else window.localStorage.removeItem(TOKEN_KEY);
+}
 
 export class ApiError extends Error {
   status: number;
@@ -49,6 +66,10 @@ async function request<T>(path: string, options: RequestInit = {}): Promise<T> {
   if (options.body && !headers.has("Content-Type")) {
     headers.set("Content-Type", "application/json");
   }
+  const token = getToken();
+  if (token && !headers.has("Authorization")) {
+    headers.set("Authorization", `Bearer ${token}`);
+  }
 
   let response: Response;
   try {
@@ -65,6 +86,10 @@ async function request<T>(path: string, options: RequestInit = {}): Promise<T> {
   }
 
   if (!response.ok) {
+    if (response.status === 401 && typeof window !== "undefined" && !path.startsWith("/auth/login")) {
+      setToken(null);
+      if (window.location.pathname !== "/login") window.location.href = "/login";
+    }
     let message = `Error ${response.status}`;
     let fields: Record<string, string> | undefined;
     try {
@@ -86,6 +111,25 @@ export const api = {
   url: API_URL,
 
   dashboard: () => request<Dashboard>("/dashboard"),
+
+  auth: {
+    login: (username: string, password: string) =>
+      request<LoginResponse>("/auth/login", {
+        method: "POST",
+        body: JSON.stringify({ username, password }),
+      }),
+    me: () => request<Usuario>("/auth/me"),
+  },
+
+  usuarios: {
+    listar: () => request<Usuario[]>("/usuarios"),
+    obtener: (id: number) => request<Usuario>(`/usuarios/${id}`),
+    crear: (body: UsuarioRequest) =>
+      request<Usuario>("/usuarios", { method: "POST", body: JSON.stringify(body) }),
+    actualizar: (id: number, body: UsuarioUpdateRequest) =>
+      request<Usuario>(`/usuarios/${id}`, { method: "PUT", body: JSON.stringify(body) }),
+    eliminar: (id: number) => request<void>(`/usuarios/${id}`, { method: "DELETE" }),
+  },
 
   cotizaciones: {
     listar: (params?: {

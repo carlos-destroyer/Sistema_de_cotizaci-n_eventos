@@ -45,6 +45,9 @@ app:
     enabled: ${SEED_ENABLED:true}
   igv:
     porcentaje: 18.00
+  jwt:
+    secret: ${JWT_SECRET:MnMEventos2026ClaveSuperSecretaParaJWTQueDebeSerLarga1234567890}
+    expiration-hours: ${JWT_EXPIRATION_HOURS:24}
 
 logging:
   level:

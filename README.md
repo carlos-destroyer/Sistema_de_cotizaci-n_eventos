@@ -61,6 +61,20 @@ Sistema web interno para crear, versionar y dar seguimiento a las cotizaciones d
 - Logo, RUC, dirección, teléfono, correo, web y términos y condiciones.
 - Porcentaje de IGV configurable (18 % por defecto).
 
+### Usuarios y acceso
+- Pantalla de inicio de sesión con usuario y contraseña (JWT).
+- Administración de cuentas (crear, editar, desactivar, eliminar) reservada al rol `ADMIN`.
+- Roles disponibles: `ADMIN` y `USUARIO`.
+
+---
+
+## Acceso inicial (desarrollo)
+- Usuario: `admin`
+- Contraseña: `admin123`
+- Rol: Administrador
+
+> Cambia estas credenciales en producción (o crea nuevos usuarios y desactiva `admin`).
+
 ---
 
 ## Stack
@@ -233,6 +247,7 @@ Al arrancar con una base vacía, el backend carga:
 | Plantillas de evento | 4 |
 | Clientes demo | 6 |
 | Cotizaciones demo | 8 |
+| Usuario administrador | 1 (admin / admin123) |
 
 Las cotizaciones demo cubren los cuatro estados y fechas variadas para que el dashboard, los estados de cotización y los reportes tengan información desde el primer inicio. El catálogo se basa en los datos reales del Excel de la empresa.
 

@@ -55,4 +55,5 @@ export const NAV_ITEMS = [
   { href: "/catalogo", label: "Catálogo", icon: "catalogo" },
   { href: "/plantillas", label: "Plantillas", icon: "plantillas" },
   { href: "/configuracion", label: "Configuración", icon: "configuracion" },
+  { href: "/usuarios", label: "Usuarios", icon: "usuarios" },
 ] as const;

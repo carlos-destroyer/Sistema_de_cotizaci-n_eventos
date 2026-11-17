@@ -258,3 +258,38 @@ export interface PlantillaRequest {
     orden: number;
   }>;
 }
+
+export type RolUsuario = "ADMIN" | "USUARIO";
+
+export interface Usuario {
+  id: number;
+  username: string;
+  nombre: string;
+  email?: string | null;
+  rol: RolUsuario;
+  activo: boolean;
+}
+
+export interface LoginResponse {
+  token: string;
+  tipo: string;
+  expiraEn: number;
+  usuario: Usuario;
+}
+
+export interface UsuarioRequest {
+  username: string;
+  password: string;
+  nombre: string;
+  email?: string | null;
+  rol?: RolUsuario;
+  activo?: boolean;
+}
+
+export interface UsuarioUpdateRequest {
+  password?: string;
+  nombre?: string;
+  email?: string | null;
+  rol?: RolUsuario;
+  activo?: boolean;
+}
