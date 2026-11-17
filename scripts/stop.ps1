@@ -20,4 +20,7 @@ Write-Host "Deteniendo procesos locales..."
 Stop-FromPidFile "frontend"
 Stop-FromPidFile "backend"
 
+Write-Host "Deteniendo contenedores backend/frontend (si estan activos)..."
+docker compose --profile full stop backend frontend 2>$null | Out-Null
+
 Write-Host "PostgreSQL sigue en Docker. Para detenerlo: docker compose stop postgres"

@@ -29,4 +29,7 @@ echo "Deteniendo procesos locales..."
 kill_tree frontend
 kill_tree backend
 
+echo "Deteniendo contenedores backend/frontend (si estan activos)..."
+docker compose --profile full stop backend frontend >/dev/null 2>&1 || true
+
 echo "PostgreSQL sigue en Docker. Para detenerlo: docker compose stop postgres"
