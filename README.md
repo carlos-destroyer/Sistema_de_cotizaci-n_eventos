@@ -22,7 +22,7 @@ Sistema web interno para crear, versionar y dar seguimiento a las cotizaciones d
 
 ### Dashboard comercial
 - KPIs del mes: cotizaciones, monto cotizado, tasa de cierre, ganancia proyectada, ticket promedio y clientes activos.
-- Pipeline por estado (`Borrador`, `Enviada`, `Aprobada`, `Rechazada`) con cantidades y montos.
+- Cotizaciones por estado (`Borrador`, `Enviada`, `Aprobada`, `Rechazada`) con cantidades y montos.
 - Serie mensual de los últimos seis meses.
 - Próximos eventos y participación por categoría.
 - Accesos directos a cotizaciones recientes.
@@ -234,7 +234,7 @@ Al arrancar con una base vacía, el backend carga:
 | Clientes demo | 6 |
 | Cotizaciones demo | 8 |
 
-Las cotizaciones demo cubren los cuatro estados y fechas variadas para que el dashboard, el pipeline y los reportes tengan información desde el primer inicio. El catálogo se basa en los datos reales del Excel de la empresa.
+Las cotizaciones demo cubren los cuatro estados y fechas variadas para que el dashboard, los estados de cotización y los reportes tengan información desde el primer inicio. El catálogo se basa en los datos reales del Excel de la empresa.
 
 Si la base ya contiene datos, el seeder no duplica registros. Para recargar todo desde cero usa `reset-db`.
 
@@ -262,7 +262,7 @@ Base: `http://localhost:8081/api`
 
 | Método | Ruta | Descripción |
 | --- | --- | --- |
-| GET | `/dashboard` | KPIs, pipeline, serie mensual y próximos eventos |
+| GET | `/dashboard` | KPIs, cotizaciones por estado, serie mensual y próximos eventos |
 | GET | `/cotizaciones` | Listado paginado con filtros |
 | GET | `/cotizaciones/{id}` | Detalle con totales |
 | POST | `/cotizaciones` | Crear cotización |

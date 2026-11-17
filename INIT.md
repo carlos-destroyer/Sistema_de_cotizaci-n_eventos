@@ -96,7 +96,7 @@ Resultados esperados en una base nueva:
 
 Checklist funcional:
 
-- [ ] El dashboard muestra KPIs y pipeline.
+- [ ] El dashboard muestra KPIs y cotizaciones por estado.
 - [ ] Se puede crear un cliente.
 - [ ] Se puede aplicar una plantilla en una cotización nueva.
 - [ ] El total, IGV y ticket por invitado se calculan.

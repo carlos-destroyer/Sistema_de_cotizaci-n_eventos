@@ -136,7 +136,7 @@ export default function DashboardPage() {
       <PageHeader
         eyebrow="Resumen ejecutivo"
         title="Panel general"
-        description="Una lectura rápida del pulso comercial de M&M Eventos: cotizaciones, pipeline y próximos eventos."
+        description="Una lectura rápida del pulso comercial de M&M Eventos: cotizaciones, estado de las propuestas y próximos eventos."
         actions={
           <>
             <Link href="/cotizaciones" className="btn btn-outline">
@@ -238,10 +238,10 @@ export default function DashboardPage() {
             <div className="card card-pad">
               <div className="mb-5 flex items-start justify-between gap-3">
                 <div>
-                  <h2 className="font-serif text-xl text-ink">Pipeline</h2>
-                  <p className="mt-1 text-xs text-slate-500">Estado de la cartera comercial</p>
+                  <h2 className="font-serif text-xl text-ink">Cotizaciones por estado</h2>
+                  <p className="mt-1 text-xs text-slate-500">Distribución y montos de la cartera</p>
                 </div>
-                <Link href="/cotizaciones" className="text-[11px] font-semibold text-brand-700 hover:text-brand-800">
+                <Link href="/cotizaciones" className="shrink-0 text-[11px] font-semibold text-brand-700 hover:text-brand-800">
                   Ver todo
                 </Link>
               </div>
