@@ -479,7 +479,7 @@ export default function ClientesPage() {
               value={form.telefono ?? ""}
               onChange={(event) => setForm({ ...form, telefono: event.target.value })}
               className="input"
-              placeholder="939 811 591"
+              placeholder="900 000 000"
             />
           </Field>
           <Field label="Correo electrónico">

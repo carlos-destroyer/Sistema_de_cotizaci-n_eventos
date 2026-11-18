@@ -9,6 +9,7 @@ import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.stereotype.Component;
@@ -38,6 +39,21 @@ public class SeedDataInitializer implements CommandLineRunner {
 
     private static final Logger log = LoggerFactory.getLogger(SeedDataInitializer.class);
     private static final BigDecimal CERO = BigDecimal.ZERO;
+
+    @Value("${app.seed.empresa.razon-social:M&M Eventos - by Mariella Martinez}")
+    private String seedRazonSocial;
+    @Value("${app.seed.empresa.nombre-comercial:M&M Eventos}")
+    private String seedNombreComercial;
+    @Value("${app.seed.empresa.ruc:10429138430}")
+    private String seedRuc;
+    @Value("${app.seed.empresa.telefono:900 000 000}")
+    private String seedTelefono;
+    @Value("${app.seed.empresa.direccion:Piura - Perú}")
+    private String seedDireccion;
+    @Value("${app.seed.empresa.email:}")
+    private String seedEmail;
+    @Value("${app.seed.empresa.igv:18.00}")
+    private String seedIgv;
 
     private final EmpresaConfigRepository empresaRepository;
     private final CategoriaServicioRepository categoriaRepository;
@@ -89,14 +105,14 @@ public class SeedDataInitializer implements CommandLineRunner {
             return;
         }
         EmpresaConfig empresa = new EmpresaConfig();
-        empresa.setRazonSocial("M&M Eventos - by Mariella Martinez");
-        empresa.setNombreComercial("M&M Eventos");
-        empresa.setRuc("10429138430");
-        empresa.setTelefono("939 811 591");
-        empresa.setDireccion("Piura - Perú");
+        empresa.setRazonSocial(seedRazonSocial);
+        empresa.setNombreComercial(seedNombreComercial);
+        empresa.setRuc(seedRuc);
+        empresa.setTelefono(seedTelefono);
+        empresa.setDireccion(seedDireccion);
         empresa.setSitioWeb(null);
-        empresa.setEmail(null);
-        empresa.setIgvPorcentaje(new BigDecimal("18.00"));
+        empresa.setEmail(seedEmail.isBlank() ? null : seedEmail);
+        empresa.setIgvPorcentaje(new BigDecimal(seedIgv));
         empresa.setTerminosCondiciones("La cotización está sujeta a disponibilidad de fecha, personal y stock de mobiliario. "
                 + "Forma de pago: 50% de adelanto para reservar la fecha y 50% antes del evento. "
                 + "Los servicios adicionales no incluidos en esta propuesta se cotizan por separado.");
@@ -433,17 +449,17 @@ public class SeedDataInitializer implements CommandLineRunner {
 
     private void crearClientes() {
         clientes.put("roberto", cliente("Sr. Roberto Palacios (Quinceañero Valeria)", TipoCliente.SOCIAL,
-                "DNI 02845671", "968 452 110", "roberto.palacios@example.com", "Castilla - Piura"));
+                "DNI 00000001", "900 000 001", "cliente1@demo.local", "Castilla - Piura"));
         clientes.put("stiwar", cliente("Novios Stiwar & Camila", TipoCliente.SOCIAL,
-                null, "969 120 445", "stiwar.camila@example.com", "Piura"));
+                null, "900 000 002", "cliente2@demo.local", "Piura"));
         clientes.put("mifarma", cliente("MiFarma S.A.C.", TipoCliente.CORPORATIVO,
-                null, "944 215 870", "eventos@mifarma.example.com", "Lima"));
+                null, "900 000 003", "cliente3@demo.local", "Lima"));
         clientes.put("andrea", cliente("Sra. Andrea Silva (Cumpleaños Mateo)", TipoCliente.SOCIAL,
-                "DNI 45120987", "955 880 321", "andrea.silva@example.com", "Piura"));
+                "DNI 00000004", "900 000 004", "cliente4@demo.local", "Piura"));
         clientes.put("colegio", cliente("Colegio de Biólogos de Piura", TipoCliente.CORPORATIVO,
-                null, "942 110 778", "colegio.biologos@example.com", "Piura"));
+                null, "900 000 005", "cliente5@demo.local", "Piura"));
         clientes.put("ruth", cliente("Sra. Ruth Palacios (Bodas de Plata)", TipoCliente.SOCIAL,
-                "DNI 03214587", "961 445 220", null, "Catacaos"));
+                "DNI 00000006", "900 000 006", null, "Catacaos"));
     }
 
     private Long cliente(String nombre, TipoCliente tipo, String documento, String telefono, String email, String direccion) {

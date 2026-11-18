@@ -76,7 +76,7 @@ public class PdfExportService {
                 FontFactory.getFont(FontFactory.TIMES_BOLD, 21, GOLD)));
         izquierda.addElement(new Paragraph("by Mariella Martinez", FontFactory.getFont(FontFactory.TIMES_ITALIC, 10, SLATE_SOFT)));
         izquierda.addElement(new Paragraph("RUC " + valor(e.getRuc(), "10429138430"), FontFactory.getFont(FontFactory.HELVETICA, 8, SLATE_SOFT)));
-        izquierda.addElement(new Paragraph("Tel. " + valor(e.getTelefono(), "939 811 591")
+        izquierda.addElement(new Paragraph("Tel. " + valor(e.getTelefono(), "900 000 000")
                 + (e.getDireccion() == null ? "" : "  |  " + e.getDireccion()), FontFactory.getFont(FontFactory.HELVETICA, 8, SLATE_SOFT)));
         if (e.getEmail() != null) {
             izquierda.addElement(new Paragraph(e.getEmail(), FontFactory.getFont(FontFactory.HELVETICA, 8, SLATE_SOFT)));

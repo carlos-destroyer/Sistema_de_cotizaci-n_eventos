@@ -225,7 +225,7 @@ export default function ConfiguracionPage() {
                     value={form.telefono}
                     onChange={(event) => setForm({ ...form, telefono: event.target.value })}
                     className="input pl-9"
-                    placeholder="939 811 591"
+                    placeholder="900 000 000"
                   />
                 </div>
               </Field>

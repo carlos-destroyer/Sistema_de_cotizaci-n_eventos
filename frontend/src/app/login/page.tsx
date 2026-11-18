@@ -7,7 +7,7 @@ import { ApiError } from "@/lib/api";
 export default function LoginPage() {
   const { login } = useAuth();
   const [username, setUsername] = useState("admin");
-  const [password, setPassword] = useState("admin123");
+  const [password, setPassword] = useState("");
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
 
@@ -73,8 +73,7 @@ export default function LoginPage() {
           </button>
 
           <p className="text-center text-[11px] text-slate-400">
-            Usuario por defecto: <span className="font-semibold">admin</span> · Contraseña:{" "}
-            <span className="font-semibold">admin123</span>
+            Usuario por defecto: <span className="font-semibold">admin</span>
           </p>
         </form>
       </div>
